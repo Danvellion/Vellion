@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vellion — Specialist search for quantitative engineering</title>
+<meta name="description" content="Vellion places high performing engineers at the top quantitative trading firms in New York. Operated in partnership with Evolve.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08080c;
+    --bg-elev: #12121a;
+    --bg-card: #0e0e16;
+    --border: rgba(255, 255, 255, 0.06);
+    --border-strong: rgba(255, 255, 255, 0.12);
+    --text: #ffffff;
+    --text-secondary: #b8b8c8;
+    --text-muted: #6a6a7c;
+    --magenta: #ff2d92;
+    --cyan: #00d9ff;
+    --gradient: linear-gradient(135deg, #ff2d92 0%, #c724b1 30%, #6b4dc7 55%, #00d9ff 100%);
+    --gradient-soft: linear-gradient(135deg, rgba(255, 45, 146, 0.15) 0%, rgba(0, 217, 255, 0.15) 100%);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    font-feature-settings: 'ss01', 'ss02';
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Background atmosphere */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 800px 600px at 15% 10%, rgba(255, 45, 146, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 800px 600px at 85% 90%, rgba(0, 217, 255, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Top nav */
+  nav {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 10;
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .logo-img {
+    height: 36px;
+    width: auto;
+    display: block;
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2dd97a;
+    box-shadow: 0 0 0 4px rgba(45, 217, 122, 0.15);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(45, 217, 122, 0.15); }
+    50% { box-shadow: 0 0 0 8px rgba(45, 217, 122, 0.05); }
+  }
+
+  /* Hero */
+  .hero {
+    padding: 140px 0 120px;
+    position: relative;
+  }
+
+  .hero-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .hero-meta::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--text-muted);
+  }
+
+  .hero h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    margin-bottom: 36px;
+    max-width: 920px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero p {
+    font-size: 20px;
+    color: var(--text-secondary);
+    max-width: 640px;
+    line-height: 1.6;
+    margin-bottom: 48px;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 28px;
+    border-radius: 6px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--gradient);
+    color: #08080c;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #ff5db3 0%, #1ee5ff 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .btn-primary:hover::before {
+    opacity: 1;
+  }
+
+  .btn-primary span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(255, 45, 146, 0.25);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+  }
+
+  /* Section common */
+  section {
+    padding: 120px 0;
+    position: relative;
+  }
+
+  .section-header {
+    margin-bottom: 80px;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--cyan);
+    transform: rotate(45deg);
+  }
+
+  .section-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(36px, 5vw, 60px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    max-width: 800px;
+  }
+
+  /* Archetypes */
+  .archetypes {
+    border-top: 1px solid var(--border);
+  }
+
+  .archetypes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-card);
+  }
+
+  .archetype {
+    padding: 48px 40px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s ease;
+    position: relative;
+  }
+
+  .archetype:nth-child(2n) { border-right: none; }
+  .archetype:nth-last-child(-n+2) { border-bottom: none; }
+
+  .archetype:hover {
+    background: linear-gradient(135deg, rgba(255, 45, 146, 0.03) 0%, rgba(0, 217, 255, 0.03) 100%);
+  }
+
+  .archetype-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .archetype-num span {
+    color: var(--cyan);
+    font-weight: 600;
+  }
+
+  .archetype-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 32px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
+
+  .archetype-desc {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .archetype-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    padding: 5px 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* Why Vellion */
+  .pillars {
+    border-top: 1px solid var(--border);
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-top: 60px;
+  }
+
+  .pillar {
+    position: relative;
+  }
+
+  .pillar-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--magenta);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .pillar-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    line-height: 1.3;
+    margin-bottom: 14px;
+    font-weight: 400;
+  }
+
+  .pillar-desc {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* About */
+  .about {
+    border-top: 1px solid var(--border);
+  }
+
+  .about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .about-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px;
+    line-height: 1.45;
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  .about-text em {
+    font-style: italic;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .about-meta {
+    padding: 32px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .about-meta-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+  }
+
+  .about-meta-value {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 17px;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+
+  .about-meta-value:last-child { margin-bottom: 0; }
+
+  .about-meta-value a {
+    color: var(--cyan);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 217, 255, 0.3);
+    transition: border-color 0.2s ease;
+  }
+
+  .about-meta-value a:hover {
+    border-color: var(--cyan);
+  }
+
+  /* Final CTA */
+  .cta-final {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 160px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-final::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 45, 146, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-final-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+    font-weight: 400;
+    position: relative;
+  }
+
+  .cta-final-title em {
+    font-style: italic;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .cta-final-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    background: var(--bg);
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .footer-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .container { padding: 0 24px; }
+    .hero { padding: 80px 0 60px; }
+    section { padding: 80px 0; }
+    .archetypes-grid { grid-template-columns: 1fr; }
+    .archetype { border-right: none !important; }
+    .archetype:last-child { border-bottom: none; }
+    .pillars-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .about-content { grid-template-columns: 1fr; gap: 40px; }
+    .section-header { margin-bottom: 48px; }
+    .about-text { font-size: 22px; }
+  }
+
+  @media (max-width: 560px) {
+    .pillars-grid { grid-template-columns: 1fr; }
+    .archetype { padding: 36px 28px; }
+    .hero-cta { flex-direction: column; align-items: stretch; }
+    .btn { justify-content: center; }
+  }
+
+  /* Stagger animation on load */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.8s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in:nth-child(1) { animation-delay: 0.1s; }
+  .fade-in:nth-child(2) { animation-delay: 0.2s; }
+  .fade-in:nth-child(3) { animation-delay: 0.3s; }
+  .fade-in:nth-child(4) { animation-delay: 0.4s; }
+  .fade-in:nth-child(5) { animation-delay: 0.5s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a href="#" class="logo">
+      <img src="vellion-logo.png" alt="Vellion" class="logo-img">
+    </a>
+    <div class="status">
+      <span class="status-dot"></span>
+      <span>NYC · Hiring Now</span>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-meta fade-in">Specialist Search · Quantitative Engineering</div>
+    <h1 class="fade-in">High performing engineers, placed at the <em>top quantitative trading firms</em> in New York.</h1>
+    <p class="fade-in">Selective mandates. High ownership. Operated in partnership with Evolve. We work with engineers who care where their code ends up and firms that pay for that depth.</p>
+    <div class="hero-cta fade-in">
+      <a href="https://calendar.app.google/qiTCjCFpWkjDtR55A" class="btn btn-primary" target="_blank" rel="noopener">
+        <span>Book a 15 min intro</span>
+      </a>
+      <a href="mailto:dan@vellion.io" class="btn btn-secondary">
+        <span>dan@vellion.io</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="archetypes" id="roles">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Roles we place</div>
+      <h2 class="section-title">Four core archetypes. Every brief sits inside one of them.</h2>
+    </div>
+    <div class="archetypes-grid">
+
+      <div class="archetype">
+        <div class="archetype-num"><span>01</span> Trading Systems</div>
+        <h3 class="archetype-title">Quantitative Developer (Trading Systems)</h3>
+        <p class="archetype-desc">Low latency execution engines, order book infrastructure, and the production trading stack that takes strategies into live markets. Where microseconds and P&amp;L meet.</p>
+        <div class="archetype-tags">
+          <span class="tag">C++</span>
+          <span class="tag">Lock free</span>
+          <span class="tag">Kernel bypass</span>
+          <span class="tag">FPGA</span>
+        </div>
+      </div>
+
+      <div class="archetype">
+        <div class="archetype-num"><span>02</span> Research Infrastructure</div>
+        <h3 class="archetype-title">Quantitative Developer (Research Infra)</h3>
+        <p class="archetype-desc">Simulation engines, backtesting frameworks, feature stores, and model serving systems that quant researchers run on. The bridge between research and production.</p>
+        <div class="archetype-tags">
+          <span class="tag">Python</span>
+          <span class="tag">JAX</span>
+          <span class="tag">PyTorch</span>
+          <span class="tag">CUDA</span>
+        </div>
+      </div>
+
+      <div class="archetype">
+        <div class="archetype-num"><span>03</span> Distributed Systems</div>
+        <h3 class="archetype-title">Software Engineer (Distributed Systems)</h3>
+        <p class="archetype-desc">High throughput backend services, batch and streaming data infrastructure, and the platform components engineers across the firm depend on. Built to scale.</p>
+        <div class="archetype-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Spark</span>
+          <span class="tag">Kafka</span>
+          <span class="tag">Microservices</span>
+        </div>
+      </div>
+
+      <div class="archetype">
+        <div class="archetype-num"><span>04</span> Platform Reliability</div>
+        <h3 class="archetype-title">Production Engineer</h3>
+        <p class="archetype-desc">Observability stacks, monitoring, and the cross product reliability layer that keeps production trading and research running. Systems engineers consume what you build.</p>
+        <div class="archetype-tags">
+          <span class="tag">Prometheus</span>
+          <span class="tag">OpenTelemetry</span>
+          <span class="tag">Kubernetes</span>
+          <span class="tag">Datadog</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="pillars">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">How we work</div>
+      <h2 class="section-title">Selective, technical, end to end.</h2>
+    </div>
+    <div class="pillars-grid">
+
+      <div class="pillar">
+        <div class="pillar-num">01</div>
+        <h3 class="pillar-title">Top firms on roster</h3>
+        <p class="pillar-desc">Direct mandates with the leading quantitative trading firms in New York. Selective by design.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-num">02</div>
+        <h3 class="pillar-title">Technical depth</h3>
+        <p class="pillar-desc">Conversations grounded in the actual stack, the actual work, and the actual people you would be sitting next to.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-num">03</div>
+        <h3 class="pillar-title">White glove relocation</h3>
+        <p class="pillar-desc">Handled end to end for candidates outside NYC. Moving costs, broker fees, visa support, sign on bonus to match.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-num">04</div>
+        <h3 class="pillar-title">High ownership</h3>
+        <p class="pillar-desc">Every candidate worked directly. Every brief understood before a CV gets submitted. No spray and pray.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">About</div>
+      <h2 class="section-title">Built for engineers who care where their code ends up.</h2>
+    </div>
+    <div class="about-content">
+      <div class="about-text">
+        Vellion is a specialist search firm dedicated to <em>quantitative engineering</em> and systematic trading. We focus on a narrow band of roles, run a narrow band of mandates, and work with engineers who would rather solve the hardest problem in the building than the easiest problem with the loudest title.
+      </div>
+      <div class="about-meta">
+        <div class="about-meta-label">Founder</div>
+        <div class="about-meta-value">Dan Moyse</div>
+
+        <div class="about-meta-label">In partnership with</div>
+        <div class="about-meta-value">Evolve</div>
+
+        <div class="about-meta-label">Location</div>
+        <div class="about-meta-value">New York City</div>
+
+        <div class="about-meta-label">Direct</div>
+        <div class="about-meta-value"><a href="mailto:dan@vellion.io">dan@vellion.io</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="container">
+    <h2 class="cta-final-title">If you build systems that <em>matter</em>, we should talk.</h2>
+    <div class="cta-final-actions">
+      <a href="https://calendar.app.google/qiTCjCFpWkjDtR55A" class="btn btn-primary" target="_blank" rel="noopener">
+        <span>Book a 15 min intro</span>
+      </a>
+      <a href="mailto:dan@vellion.io" class="btn btn-secondary">
+        <span>dan@vellion.io</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-text">Vellion.io · Specialist search for quantitative engineering</div>
+    <div class="footer-text">© 2026 · In partnership with Evolve</div>
+  </div>
+</footer>
+
+</body>
+</html>
